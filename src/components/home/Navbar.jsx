@@ -28,15 +28,20 @@ export default function Navbar() {
           onClick={() => setIsOpen(!isOpen)}
           className="w-full justify-between"
         >
-          {label} <ChevronDown className={`ml-1 h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          {label} <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
         </Button>
         {isOpen && (
-          <div className="mt-2 space-y-2">
-            {items.map((item) => (
+          <div className="mt-2 space-y-2 pl-4 overflow-hidden">
+            {items.map((item, index) => (
               <Button
                 key={item.label}
                 variant="ghost"
-                className="w-full text-left pl-4"
+                className="w-full text-left transition-all duration-300 ease-in-out"
+                style={{
+                  transform: `translateY(${isOpen ? '0' : '-10px'})`,
+                  opacity: isOpen ? 1 : 0,
+                  transitionDelay: `${index * 50}ms`
+                }}
                 onClick={() => handleNavigation(item.path)}
               >
                 {item.label}
@@ -133,16 +138,14 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Button variant="ghost" className="block w-full text-left" onClick={() => handleNavigation('/')}>Home</Button>
-            {menuItems.map((item) => (
-              <NavItem key={item.label} label={item.label} items={item.items} />
-            ))}
-          </div>
+      <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${isMobileMenuOpen ? 'max-h-screen' : 'max-h-0'}`}>
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <Button variant="ghost" className="block w-full text-left" onClick={() => handleNavigation('/')}>Home</Button>
+          {menuItems.map((item) => (
+            <NavItem key={item.label} label={item.label} items={item.items} />
+          ))}
         </div>
-      )}
+      </div>
     </nav>
   )
 }

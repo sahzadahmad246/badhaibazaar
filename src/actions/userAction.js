@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   FETCH_USER_REQUEST,
   FETCH_USER_SUCCESS,
@@ -9,29 +10,26 @@ export const fetchUser = () => async (dispatch) => {
   dispatch({ type: FETCH_USER_REQUEST });
 
   try {
-    const response = await fetch("https://badhaibazaarbackend.onrender.com/profile", {
-      credentials: "include",
+    const response = await axios.get("http://localhost:5000/profile", {
+      withCredentials: true, // Include cookies in the request
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch user data");
-    }
-
-    const data = await response.json();
-    dispatch({ type: FETCH_USER_SUCCESS, payload: data.user });
+    dispatch({ type: FETCH_USER_SUCCESS, payload: response.data.user });
   } catch (error) {
-    dispatch({ type: FETCH_USER_FAILURE, payload: error.message });
+    dispatch({ type: FETCH_USER_FAILURE, payload: error.response?.data?.message || error.message });
   }
 };
 
 export const logoutUser = () => async (dispatch) => {
   try {
-    const response = await fetch("https://badhaibazaarbackend.onrender.com/logout", {
-      method: "GET",
-      credentials: "include",
-    });
+    const response = await axios.get(
+      "https://badhaibazaarbackend.onrender.com/logout",
+      {
+        withCredentials: true, // Include cookies in the request
+      }
+    );
 
-    if (!response.ok) {
+    if (!response.data.success) {
       throw new Error("Failed to log out");
     }
 

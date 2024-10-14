@@ -4,6 +4,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Layout } from "./Layout";
 import Home from "./components/home/Home";
 import { About } from "./components/nav/About";
+import Login from "./components/home/Login";
+import Signup from "./components/home/Signup";
+import Profile from "./components/home/Profile";
+import { Provider } from "react-redux";
+import store from "./store";
+import { Toaster } from "react-hot-toast";
 // Festivals
 import {
   Christmas,
@@ -35,6 +41,18 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <About />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
       // Routes for festival components here
       {
@@ -91,7 +109,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />;
+      <Toaster />
+    </Provider>
+  );
 }
 
 export default App;

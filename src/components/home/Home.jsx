@@ -4,60 +4,7 @@ import Card from "./../ui/Card";
 import CardContent from "./../ui/CardContent";
 import { Sparkles, Share2, Palette } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-const occasions = [
-  {
-    label: "Festivals",
-    items: [
-      {
-        label: "Diwali",
-        path: "/festivals/diwali",
-        description: "Get a variety of posters and banners for Diwali wishes",
-        images: ["https://t.ly/jgOiu", "https://t.ly/jgOiu", "https://t.ly/jgOiu"],
-      },
-      {
-        label: "Eid",
-        path: "/festivals/eid",
-        description: "Celebrate Eid with beautiful posters and banners",
-        images: ["https://t.ly/32Zz1", "https://t.ly/32Zz1", "https://t.ly/32Zz1"],
-      },
-      {
-        label: "Holi",
-        path: "/festivals/holi",
-        description: "Spread colorful Holi wishes with our designs",
-        images: ["https://t.ly/C-Ebn", "https://t.ly/C-Ebn", "https://t.ly/C-Ebn"],
-      },
-    ],
-  },
-  {
-    label: "Special Days",
-    items: [
-      {
-        label: "Mother's Day",
-        path: "/special-days/mothers-day",
-        description: "Show your love with Mother's Day designs",
-        images: ["https://t.ly/Ld1DR", "https://t.ly/Ld1DR", "https://t.ly/Ld1DR"],
-      },
-      {
-        label: "Valentine's Day",
-        path: "/special-days/valentines-day",
-        description: "Express your love with Valentine's Day cards",
-        images: ["https://t.ly/VPVcD", "https://t.ly/VPVcD", "https://t.ly/VPVcD"],
-      },
-    ],
-  },
-  {
-    label: "Anniversaries",
-    items: [
-      {
-        label: "Wedding Anniversary",
-        path: "/anniversaries/wedding",
-        description: "Celebrate love with anniversary designs",
-        images: ["https://t.ly/VPVcD", "https://t.ly/VPVcD", "https://t.ly/VPVcD"],
-      },
-    ],
-  },
-];
+import OccasionCards from "./OccasionCards";
 
 export default function HomePage() {
   const [visible, setVisible] = useState([]);
@@ -92,53 +39,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       <main>
-        <section className="py-12 px-4">
-          <div className="container mx-auto">
-            <h2 className="text-4xl font-bold mb-8 text-center">
-              Create and Share Festive Joy
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {occasions.flatMap((category) =>
-                category.items.map((item, index) => (
-                  <div
-                    key={item.label}
-                    ref={(el) => (cardsRef.current[index] = el)}
-                    className={`transition-opacity duration-500 ${
-                      visible.includes(index.toString())
-                        ? "opacity-100"
-                        : "opacity-0"
-                    }`}
-                  >
-                    <Card className="h-full">
-                      <CardContent className="p-6">
-                        <div className="grid grid-cols-3 gap-2 mb-4">
-                          {item.images.map((image, imgIndex) => (
-                            <img
-                              key={imgIndex}
-                              src={image}
-                              alt={`${item.label} ${imgIndex + 1}`}
-                              className="w-full h-24 object-cover rounded"
-                            />
-                          ))}
-                        </div>
-                        <h3 className="text-xl font-semibold mb-2">
-                          {item.label}
-                        </h3>
-                        <p className="text-muted-foreground mb-4">
-                          {item.description}
-                        </p>
-                        <Button onClick={() => navigate(item.path)}>
-                          Create Now
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        </section>
-
+        <OccasionCards />
         <section className="py-12 px-4 bg-muted">
           <div className="container mx-auto">
             <h3 className="text-2xl font-semibold mb-8 text-center">

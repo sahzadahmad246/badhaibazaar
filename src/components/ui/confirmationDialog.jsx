@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Button } from "./../ui/Button";
+import { Button } from "./Button";
 import { X } from "lucide-react";
 
 const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {

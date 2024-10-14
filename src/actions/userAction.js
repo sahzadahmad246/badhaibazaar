@@ -10,7 +10,7 @@ export const fetchUser = () => async (dispatch) => {
   dispatch({ type: FETCH_USER_REQUEST });
 
   try {
-    const response = await axios.get("http://localhost:5000/profile", {
+    const response = await axios.get("https://badhaibazaarbackend.onrender.com/profile", {
       withCredentials: true, // Include cookies in the request
     });
 

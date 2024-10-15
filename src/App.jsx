@@ -7,6 +7,7 @@ import { About } from "./components/nav/About";
 import Login from "./components/home/Login";
 import Signup from "./components/home/Signup";
 import Profile from "./components/home/Profile";
+import Dashboard from "./components/admin/Dashboard";
 import { Provider } from "react-redux";
 import store from "./store";
 import { Toaster } from "react-hot-toast";
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
       // Routes for festival components here
       {

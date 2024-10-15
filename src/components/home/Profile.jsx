@@ -2,7 +2,16 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./../ui/Button";
 import { Input } from "./../ui/Input";
-import { User, Mail, Camera, Edit, Share2, AlertCircle, LogOut } from "lucide-react";
+import {
+  User,
+  Mail,
+  Camera,
+  Edit,
+  Share2,
+  AlertCircle,
+  LogOut,
+  LayoutDashboard,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, logoutUser } from "../../actions/userAction";
 import ProfileLoader from "./../loaders/profileLoader";
@@ -53,6 +62,10 @@ export default function Profile() {
     navigate("/login");
   };
 
+  const handleDashboardClick = () => {
+    navigate("/dashboard");
+  };
+
   if (loading || isLoggingOut) {
     return <ProfileLoader />;
   }
@@ -88,16 +101,30 @@ export default function Profile() {
       className="flex items-center justify-center min-h-screen bg-gray-100 p-4"
     >
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-[0_0_10px_rgba(0,0,0,0.1)] relative">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-4 right-4 text-gray-500 hover:text-red-500"
-          onClick={handleLogoutClick}
-          disabled={isLoggingOut}
-        >
-          <LogOut className="h-5 w-5" />
-          <span className="sr-only">Logout</span>
-        </Button>
+        <div className="absolute  top-4 right-4 flex space-x-2">
+          {user.role === "user" && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-gray-500 hover:text-blue-500"
+              onClick={handleDashboardClick}
+              title="Dashboard"
+            >
+              <LayoutDashboard className="h-5 w-5" />
+              <span className="sr-only">Dashboard</span>
+            </Button>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-gray-500 hover:text-red-500"
+            onClick={handleLogoutClick}
+            disabled={isLoggingOut}
+          >
+            <LogOut className="h-5 w-5" />
+            <span className="sr-only">Logout</span>
+          </Button>
+        </div>
 
         <motion.div
           initial={{ y: -20 }}

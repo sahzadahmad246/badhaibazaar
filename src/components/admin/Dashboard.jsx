@@ -10,6 +10,7 @@ import {
   ChevronDown,
   ChevronUp,
   Share2,
+  Menu,
 } from "lucide-react";
 
 const occasions = [
@@ -445,6 +446,7 @@ export default function Dashboard() {
   const [selectedItem, setSelectedItem] = useState(occasions[0].items[0]);
   const [selectedImage, setSelectedImage] = useState(selectedItem.images[0]);
   const [isEditing, setIsEditing] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setSelectedImage(selectedItem.images[0]);
@@ -501,11 +503,25 @@ export default function Dashboard() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gray-100 p-8"
+      className="min-h-screen bg-gray-100 p-4 sm:p-8"
     >
-      <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div className="col-span-1 bg-white p-6 rounded-lg shadow">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
+        <Button
+          variant="outline"
+          size="icon"
+          className="sm:hidden"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <Menu className="h-4 w-4" />
+        </Button>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div
+          className={`lg:col-span-1 bg-white p-6 rounded-lg shadow ${
+            isMobileMenuOpen ? "block" : "hidden"
+          } lg:block`}
+        >
           <h2 className="text-xl font-semibold mb-4">Occasions</h2>
           {occasions.map((category) => (
             <DropdownCategory
@@ -518,13 +534,16 @@ export default function Dashboard() {
                 )
               }
               selectedItem={selectedItem}
-              onItemClick={setSelectedItem}
+              onItemClick={(item) => {
+                setSelectedItem(item);
+                setIsMobileMenuOpen(false);
+              }}
             />
           ))}
         </div>
-        <div className="col-span-3 bg-white p-6 rounded-lg shadow">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">
+        <div className="lg:col-span-3 bg-white p-6 rounded-lg shadow">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+            <h2 className="text-xl font-semibold mb-2 sm:mb-0">
               Image Management: {selectedItem.label}
             </h2>
             <div>
@@ -543,7 +562,7 @@ export default function Dashboard() {
               </label>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[calc(100vh-240px)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[calc(100vh-240px)]">
             <div className="overflow-hidden h-full">
               <h3 className="text-lg font-medium mb-2">Image List</h3>
               <div
@@ -640,14 +659,18 @@ export default function Dashboard() {
                         rows={4}
                         className="mb-2"
                       />
-                      <div className="flex justify-between">
+                      <div className="flex flex-col sm:flex-row justify-between gap-2">
                         <Button
                           onClick={() => setIsEditing(false)}
-                          className="bg-black text-white"
+                          className="bg-black text-white w-full sm:w-auto"
                         >
                           Save Changes
                         </Button>
-                        <Button onClick={handleShareImage} variant="outline">
+                        <Button
+                          onClick={handleShareImage}
+                          variant="outline"
+                          className="w-full sm:w-auto"
+                        >
                           <Share2 className="w-4 h-4 mr-2" />
                           Share Image
                         </Button>
@@ -661,14 +684,18 @@ export default function Dashboard() {
                       <p className="text-gray-600 mb-4">
                         {selectedImage.description}
                       </p>
-                      <div className="flex justify-between">
+                      <div className="flex flex-col sm:flex-row justify-between gap-2">
                         <Button
                           onClick={() => setIsEditing(true)}
-                          className="bg-black text-white"
+                          className="bg-black text-white w-full sm:w-auto"
                         >
                           Edit
                         </Button>
-                        <Button onClick={handleShareImage} variant="outline">
+                        <Button
+                          onClick={handleShareImage}
+                          variant="outline"
+                          className="w-full sm:w-auto"
+                        >
                           <Share2 className="w-4 h-4 mr-2" />
                           Share Image
                         </Button>
